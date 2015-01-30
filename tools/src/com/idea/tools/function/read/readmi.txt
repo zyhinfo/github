@@ -1,0 +1,5 @@
+readall 读取文件中的全部数据
+readbig 对比较大的xls 和 xlsx进行处理
+readshow 读取文件的前几行拼成表格用于界面展示
+readtest 测试文件数据是否正确
+sqlldr 读文本数据进行快速上传

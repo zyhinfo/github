@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+	" default-lazy-init="true">
+	
+	<description>Spring---Ibatis 配置</description>
+	<bean id="sqlMap"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean" >
+		<property name="configLocation">
+			<value>classpath:res\orm\SqlMapConfig.xml</value>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:/com/idea/**/domain/sql/*.xml</value>
+			</list>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sqlMapClientTemplate"
+		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMap" />
+	</bean>
+
+</beans>

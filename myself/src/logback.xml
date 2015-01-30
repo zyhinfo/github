@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+说明：使用logback.xml :需要：slf4j-api-1.5.5.jar logback-classic.jar,logback-core.jar
+-->
+<configuration>
+	<substitutionProperty name="log.base" value="../LOG/HBNAIS" />
+	<jmxConfigurator />
+	
+	
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date %-5level %logger{80} - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Encoding>UTF-8</Encoding>
+		<File>${log.base}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.base}.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+			<!-- <maxHistory>2</maxHistory>  -->
+			<maxIndex>5</maxIndex>
+			<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+		    	<MaxFileSize>5MB</MaxFileSize> 
+		  	</triggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+		</layout>
+	</appender>
+	
+	<logger name="com">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="org.directwebremoting">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql">
+		 <level value="DEBUG" /> 
+	</logger>
+
+	<root>
+		<level value="error" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile" />
+	</root>
+</configuration>
+
