@@ -340,29 +340,35 @@ public class PersonalFileAction extends BaseAction{
 		//获取文件上传参数编号
 		String upParamId = param.getSYSTEM_UPLOAD_PARAMID();
 		Map<String,String> paramMap = service.queryParamById(request,upParamId);
-		Upload upload=ToolsFactory.newFileUpload(paramMap.get("path")+user.getUserId()+"/");
+		Upload upload=ToolsFactory.newFileUpload(paramMap.get("path")+user.getUserId()+"/"+Util.dateToString("")+"/");
 		Map<String,String> keyAndVal = upload.upload(request);
-		//将图片缩小
-		String srcImagePath = keyAndVal.get("filePath");
 		String archiveId = keyAndVal.get("archiveId");
-		String fileType = srcImagePath.substring(srcImagePath.lastIndexOf(".")+1);
-		String fileName = srcImagePath.substring(0,srcImagePath.lastIndexOf("."));
-		//对上传文件名称进行修改
-		int size = 120;//图片大小80*80
-		String toImagePath = fileName+"_"+size+"."+fileType;
-		try {
-			ToolsFactory.newImage().resizeImage(srcImagePath, toImagePath, size, size);
-			//将图片转成base64
-			String photoBase64=Base64.imageToBase64(toImagePath);
-			//保存到数据库中
-			Map param = Util.getNewMap();
-			param.put("archiveId", archiveId);
-			param.put("photoBase64", photoBase64);
-			service.saveImgBase64(param);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String msg="ok";
+		if(Util.toInteger(keyAndVal.get("fileSize"), 0) < 1024*2){
+			//将图片缩小
+			String srcImagePath = keyAndVal.get("filePath");
+			String fileType = srcImagePath.substring(srcImagePath.lastIndexOf(".")+1);
+			String fileName = srcImagePath.substring(0,srcImagePath.lastIndexOf("."));
+			//对上传文件名称进行修改
+			int size = 180;//图片大小80*80
+			String toImagePath = fileName+"_"+size+"."+fileType;
+			try {
+				ToolsFactory.newImage().resizeImage(srcImagePath, toImagePath, size, size);
+				//将图片转成base64
+				String photoBase64=Base64.imageToBase64(toImagePath);
+				//保存到数据库中
+				Map param = Util.getNewMap();
+				param.put("archiveId", archiveId);
+				param.put("photoBase64", photoBase64);
+				service.saveImgBase64(param);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			msg="err";
 		}
+		map.put("msg", msg);
 		map.put("archiveId", archiveId);
 		return showPersonalFile(map, request);
 	}

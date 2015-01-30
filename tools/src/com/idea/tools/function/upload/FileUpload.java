@@ -61,7 +61,7 @@ public class FileUpload implements Upload{
 						if(!file.exists()) file.mkdirs();
 						item.write(new File(FILE_UPLOAD_PATH + name));
 						paramMap.put("filePath", FILE_UPLOAD_PATH + name);
-						paramMap.put("fileSize", (size / 1024 + 1) + "kb");
+						paramMap.put("fileSize", (size / 1024 + 1)+""); //kb
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

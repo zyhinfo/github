@@ -264,6 +264,7 @@ public class OperateImage implements Image {
 			// 读入文件
 			File file = new File(srcImagePath);
 			// 构造Image对象
+			
 			BufferedImage src = javax.imageio.ImageIO.read(file);
 			// 放大边长
 			BufferedImage tag = new BufferedImage(width, height,
