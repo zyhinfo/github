@@ -28,10 +28,17 @@ public class UserService extends BaseDao {
 	public void deleteUser(String id){
 		this.deleteData("T01_SYS_USER", "USER_ID='"+id+"'",false);
 		this.deleteData("T01_SYS_USER_USERGROUP", "USER_ID='"+id+"'",false);
+		
 	}
 	public void saveUserAdd(UserBean bean){
 		bean.setUserId(Util.dateToString(""));
 		this.insert("User.saveUserAdd", bean);
+		//更新档案表
+		Map<String,Object> param = Util.getNewMap();
+		param.put("archiveId", Util.dateToString(""));
+		param.put("userId", bean.getUserId());
+		param.put("userName", bean.getUserName());
+		this.insert("User.addPersonalFileAdd",param);
 	}
 	public void saveUserEdit(UserBean bean){
 		this.insert("User.saveUserEdit", bean);

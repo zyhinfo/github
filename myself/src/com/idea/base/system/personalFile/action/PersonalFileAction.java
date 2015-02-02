@@ -78,21 +78,26 @@ public class PersonalFileAction extends BaseAction{
 		String archiveId=request.getParameter("archiveId");
 		if(Util.isEmpty(archiveId)){
 			if(map.containsKey("archiveId")){
-				archiveId=(String)map.get("archiveId");
+				param.put("archiveId", (String)map.get("archiveId"));
 			}else{
 				//根据用户编号查出档案编号archiveId
 				String userId=this.getUser(request).getUserId();
 				param.put("userId", userId);
-				archiveId="";
 			}
+		}else{
+			param.put("archiveId", archiveId);
+		}
+		Map<String,String> arInfo = service.getArchiveInfo(param);
+		if(arInfo != null){
+			archiveId = arInfo.get("ARCHIVE_ID");
+			map.put("archiveInfo", arInfo);
+			map.put("educationList", service.getArchiveEducationList(archiveId));
+			map.put("jobList", service.getArchiveJobList(archiveId));
+			map.put("trainList", service.getArchiveTrainList(archiveId));
+			map.put("rewardList", service.getArchiveRewardList(archiveId));
+			map.put("holidayList", service.getArchiveHolidayList(archiveId));
 		}
 		map.put("titId", request.getParameter("titId"));
-		map.put("archiveInfo", service.getArchiveInfo(archiveId));
-		map.put("educationList", service.getArchiveEducationList(archiveId));
-		map.put("jobList", service.getArchiveJobList(archiveId));
-		map.put("trainList", service.getArchiveTrainList(archiveId));
-		map.put("rewardList", service.getArchiveRewardList(archiveId));
-		map.put("holidayList", service.getArchiveHolidayList(archiveId));
 		return "base/system/personalFile/showPersonalFile";
 	}
 	
@@ -321,6 +326,25 @@ public class PersonalFileAction extends BaseAction{
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 		try {
 			service.saveArchiveHolidayEdit(bean);
+			modelAndView.addObject("info", "ok");
+		} catch (Exception e) {
+			modelAndView.addObject("info", "err");
+		}
+		return modelAndView;
+	}
+	
+	/**
+	 * 用户档案删除
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(params = "method=deletePersonalFile")
+	public ModelAndView deletePersonalFile(ModelMap map, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+		String id = request.getParameter("id");
+		try {
+			service.deletePersonalFile(id);
 			modelAndView.addObject("info", "ok");
 		} catch (Exception e) {
 			modelAndView.addObject("info", "err");

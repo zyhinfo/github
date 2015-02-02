@@ -30,8 +30,8 @@ public class PersonalFileService extends BaseDao {
 	}
 	
 	
-	public Map getArchiveInfo(String archiveId){
-		return (Map)this.queryForObject("PersonalFile.getArchiveInfo", archiveId);
+	public Map getArchiveInfo(Map<String,Object> param){
+		return (Map)this.queryForObject("PersonalFile.getArchiveInfo", param);
 	}
 	public List getArchiveEducationList(String archiveId){
 		return this.queryForList("PersonalFile.getArchiveEducationList",archiveId);
@@ -92,6 +92,14 @@ public class PersonalFileService extends BaseDao {
 	}
 	public void saveArchiveHolidayEdit(HolidayBean bean){
 		this.update("PersonalFile.saveArchiveHolidayEdit",bean);
+	}
+	public void deletePersonalFile(String id){
+		this.deleteData("T03_ARCHIVE_EDUCATION", "ARCHIVE_ID='"+id+"'",false);
+		this.deleteData("T03_ARCHIVE_HOLIDAY", "ARCHIVE_ID='"+id+"'",false);
+		this.deleteData("T03_ARCHIVE_JOB", "ARCHIVE_ID='"+id+"'",false);
+		this.deleteData("T03_ARCHIVE_REWARD", "ARCHIVE_ID='"+id+"'",false);
+		this.deleteData("T03_ARCHIVE_TRAIN", "ARCHIVE_ID='"+id+"'",false);
+		this.deleteData("T03_ARCHIVE_INFO", "ARCHIVE_ID='"+id+"'",false);
 	}
 	public void saveImgBase64(Map<String,String> param){
 		this.update("PersonalFile.saveImgBase64",param);
