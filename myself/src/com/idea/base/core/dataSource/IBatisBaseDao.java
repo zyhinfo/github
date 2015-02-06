@@ -19,7 +19,7 @@ import com.idea.base.util.ConvertData;
  * @author : zhangyh
  * @date   : 2013-6-5
  */
-public class IBatisBaseDao {
+public class IBatisBaseDao{
 	
 	@Autowired
 	@Qualifier("sqlMapClientTemplate")
@@ -27,6 +27,8 @@ public class IBatisBaseDao {
 	public SqlMapClientTemplate getSqlMapClientTemplate() {
 		return sqlMapClientTemplate;
 	}
+	
+	
 	//新增数据
 	public void insert(String statementName){
 		this.getSqlMapClientTemplate().insert(statementName);

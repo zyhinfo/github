@@ -50,6 +50,7 @@ function archiveInfoEditOK(item, dialog){
  * 教育信息 新增
  */
 function addArchiveEducation(){
+	
 	liger.get("school").setValue("");
 	liger.get("profession").setValue("");
 	liger.get("education").setValue("");

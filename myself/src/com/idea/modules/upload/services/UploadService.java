@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.idea.base.core.dao.BaseDao;
+import com.idea.base.core.dataSource.JdbcService;
 import com.idea.base.util.ConvertData;
 import com.idea.tools.util.Util;
 
@@ -18,6 +21,12 @@ import com.idea.tools.util.Util;
  */
 @Service
 public class UploadService extends BaseDao {
+	@Autowired
+	@Qualifier("JdbcService")
+	private JdbcService jdbc;
+	public JdbcService getJdbcService(){
+		return jdbc;
+	}
 	private String ATTR_COL="COL_";
 	public void addUploadLog(Map<String,String> param){
 		this.insert("Upload.addUploadLog", param);

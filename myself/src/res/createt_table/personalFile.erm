@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>1</x>
-	<y>54</y>
+	<y>50</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -40,7 +40,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/Users/zhangyh/eclipse_Workspace/myself/src/res/createt_table/personalFile.sql</ddl_output>
+			<ddl_output>/Users/zhangyh/eclipse_Workspace/github/myself/src/res/createt_table/personalFile.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -100,7 +100,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2015-01-05 11:29:51</creation_date>
-			<updated_date>2015-01-26 22:09:09</updated_date>
+			<updated_date>2015-02-02 10:19:16</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -494,7 +494,7 @@
 			<description>Base64编码</description>
 			<logical_name>照片</logical_name>
 			<physical_name>PHOTO</physical_name>
-			<type>nclob</type>
+			<type>clob</type>
 		</word>
 		<word>
 			<id>28</id>
@@ -1506,7 +1506,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>nclob</type>
+					<type>clob</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>

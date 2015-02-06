@@ -20,8 +20,9 @@ import com.idea.base.core.dao.action.BaseAction;
 import com.idea.base.logon.domain.UserInfo;
 import com.idea.base.system.param.util.ParamConstant;
 import com.idea.base.util.ConvertData;
-import com.idea.modules.upload.domain.ExportThread;
+import com.idea.modules.upload.domain.ColParamBean;
 import com.idea.modules.upload.domain.UploadBean;
+import com.idea.modules.upload.domain.UploadThread;
 import com.idea.modules.upload.init.InitUpload;
 import com.idea.modules.upload.services.UploadService;
 import com.idea.tools.factory.ToolsFactory;
@@ -149,7 +150,8 @@ public class UploadAction extends BaseAction{
 	public ModelAndView importDB(ModelMap map,UploadBean bean, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 		UserInfo user = this.getUser(request);
-		
+		String upParamId = param.getSYSTEM_UPLOAD_PARAMID();
+		Map<String,String> paramMap = service.queryParamById(request,upParamId);
 		try {
 			//初始化数据记录
 			Map<String,Object> data = Util.getNewMap();
@@ -157,9 +159,21 @@ public class UploadAction extends BaseAction{
 			data.put("instName", bean.getDataName());
 			data.put("status", "0");//正在上传状态
 			data.put("userId", user.getUserId());
+			data.put("instTable", "DATA_INS_"+Util.dateToString(""));
 			service.addDataIns(data);
+			data.put("colParam", bean.getColParam());
+			ColParamBean colBean = new ColParamBean(data,service.querySysAttr(request, ""));
+			//创建数据存储表
+			service.updateData(colBean.getCreateSql());
+			data.put("insertSql", colBean.getInsertSql());
+			data.put("readRowNum", colBean.getReadRowNum());
+			data.put("types", colBean.getTypes());
 			//调用线程导入数据
-			ExportThread export = new ExportThread(data,service);
+			
+			data.put("filePath", bean.getFilePath());
+			data.put("readCount", paramMap.get("readCount"));
+			data.put("textSplit",paramMap.get("textSplit"));
+			UploadThread export = new UploadThread(data,service);
 			export.run();
 			
 			modelAndView.addObject("info", "ok");
