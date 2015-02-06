@@ -31,7 +31,9 @@ public class UploadService extends BaseDao {
 	public void addUploadLog(Map<String,String> param){
 		this.insert("Upload.addUploadLog", param);
 	}
-	
+	public void updateUploadLog(Map<String,Object> param){
+		this.insert("Upload.updateUploadLog", param);
+	}
 	public String getTableJSON(List<List<String>> rows,List<Map<String,String>> sysAttr){
 		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
 		if(rows.size() > 0){

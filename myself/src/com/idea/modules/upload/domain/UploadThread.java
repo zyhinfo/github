@@ -46,13 +46,13 @@ public class UploadThread extends BaseThread{
 				bsu.setTypes(types);
 				
 				//修改数据状态为上传成功
-				int rowNum = 1;
+				int rowNum = 0;
 				while(true){
 					List<List<String>> list=read.readFile();
 					if(list.size()==0) break;
 					for(List<String> rows:list){
 						Object[] obj= new Object[types.length];
-						obj[0]=rowNum++;
+						obj[0]=++rowNum;
 						for(int i=0;i<readRowNum.size();i++){
 							obj[i+1]=rows.get(readRowNum.get(i)-1);
 						}
@@ -61,6 +61,7 @@ public class UploadThread extends BaseThread{
 					}
 				}
 				read.closeAll();
+				param.put("rowNum", rowNum);
 			}
 			param.put("status", "1");
 		}catch(Exception e){
@@ -70,6 +71,8 @@ public class UploadThread extends BaseThread{
 		}
 		//修改数据状态
 		dao.update("Upload.updateDataInsStatus",param);
+		
+		dao.updateUploadLog(param);
 	}
 	
 }

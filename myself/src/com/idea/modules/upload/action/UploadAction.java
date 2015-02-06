@@ -80,10 +80,12 @@ public class UploadAction extends BaseAction{
 			Entry entry = (Entry)it.next();
 			map.put(entry.getKey().toString(), entry.getValue().toString());
 		}
-		keyAndVal.put("uploadId", Util.dateToString(""));
+		String uploadId = Util.dateToString("");
+		keyAndVal.put("uploadId", uploadId);
 		keyAndVal.put("userId", user.getUserId());
 		keyAndVal.put("userName", user.getUserName());
 		service.addUploadLog(keyAndVal);
+		map.put("uploadId", uploadId);
 		return "modules/upload/readFile";
 	}
 	
@@ -155,7 +157,8 @@ public class UploadAction extends BaseAction{
 		try {
 			//初始化数据记录
 			Map<String,Object> data = Util.getNewMap();
-			data.put("instId", Util.dateToString(""));
+			//上传日志 和数据集是相同的id
+			data.put("instId", request.getParameter("uploadId"));
 			data.put("instName", bean.getDataName());
 			data.put("status", "0");//正在上传状态
 			data.put("userId", user.getUserId());

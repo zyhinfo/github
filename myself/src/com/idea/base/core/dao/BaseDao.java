@@ -67,7 +67,7 @@ public class BaseDao extends IBatisBaseDao{
 	 * 删除表中数据
 	 * @param tableName
 	 * @param whereStr
-	 * @param checkTableExists 检查表是否存在true:yes,false:no
+	 * @param checkTableExists 检查表是否存在true:检查,false:不检查
 	 */
 	public void deleteData(String tableName,String whereStr,boolean checkTableExists){
 		if(Util.isNotEmpty(tableName)){
@@ -79,6 +79,18 @@ public class BaseDao extends IBatisBaseDao{
 					updateData("truncate table "+tableName);
 				}
 				
+			}
+		}
+	}
+	/**
+	 * 删除表
+	 * @param tableName 要删除的表名
+	 * @param checkTableExists 检查表是否存在true:检查,false:不检查
+	 */
+	public void dropTable(String tableName,boolean checkTableExists){
+		if(Util.isNotEmpty(tableName)){
+			if(!checkTableExists || isExistsTable(tableName)){
+				this.update("BaseDao.dropTable",tableName);
 			}
 		}
 	}

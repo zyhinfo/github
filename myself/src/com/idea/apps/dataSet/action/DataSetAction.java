@@ -93,8 +93,10 @@ public class DataSetAction extends BaseAction{
 	public ModelAndView deleteDataSet(ModelMap map, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 		String id = request.getParameter("id");
+		String tableName = request.getParameter("tableName");
 		try {
 			service.deleteDataSet(id);
+			service.dropTable(tableName, true);
 			modelAndView.addObject("info", "ok");
 		} catch (Exception e) {
 			modelAndView.addObject("info", "err");
