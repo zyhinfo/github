@@ -20,6 +20,7 @@ public class UploadThread extends BaseThread{
 	String insertSql = "";
 	List<Integer> readRowNum = null;
 	int[] types = null;
+	int isTitle = 0;  //是否标题  0=没有，1有
 	public UploadThread(Map<String,Object> param,UploadService dao){
 		this.param = param;
 		insertSql = Util.toString(param.get("insertSql"));
@@ -44,13 +45,16 @@ public class UploadThread extends BaseThread{
 				BatchSqlUpdate bsu = new BatchSqlUpdate(ds, insertSql);
 				bsu.setBatchSize(100);
 				bsu.setTypes(types);
-				
 				//修改数据状态为上传成功
 				int rowNum = 0;
 				while(true){
 					List<List<String>> list=read.readFile();
 					if(list.size()==0) break;
 					for(List<String> rows:list){
+						if(rowNum == 0 && isTitle(rows)) {
+							isTitle = 1;
+							continue;
+						}
 						Object[] obj= new Object[types.length];
 						obj[0]=++rowNum;
 						for(int i=0;i<readRowNum.size();i++){
@@ -71,8 +75,26 @@ public class UploadThread extends BaseThread{
 		}
 		//修改数据状态
 		dao.update("Upload.updateDataInsStatus",param);
-		
+		param.put("isTitle", isTitle);
 		dao.updateUploadLog(param);
 	}
-	
+	public boolean isTitle(List<String> firstData){
+		boolean fals = false;
+		for(String s:firstData){
+			if (Util.isIndexOf(s, "姓名")) {
+				fals = true;
+			}else if (Util.isIndexOf(s, "地址")) {
+				fals = true;
+			}else if (Util.isIndexOf(s, "年龄")) {
+				fals = true;
+			}else if (Util.isIndexOf(s, "电话")) {
+				fals = true;
+			}else if (Util.isIndexOf(s, "手机号")) {
+				fals = true;
+			}else if (Util.isIndexOf(s, "邮编")) {
+				fals = true;
+			}
+		}
+		return fals;
+	}
 }

@@ -89,6 +89,14 @@ public class Util {
 		}
 		return 0;
 	}
+	public static boolean isIndexOf(Object obj,String str){
+		if(obj != null){
+			if(obj.toString().indexOf(str)!=-1){
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * 判断俩个字符是否相等
 	 * @param value1

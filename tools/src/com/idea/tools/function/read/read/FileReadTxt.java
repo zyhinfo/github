@@ -21,7 +21,7 @@ public class FileReadTxt implements ReadBatchFile {
 	private String filePath = "";
 	private String split = "";
 	private int curLinNum = 0;
-	
+	private int isTitle = 0;
 	//temp param
 	private String secondRow = "";
 
