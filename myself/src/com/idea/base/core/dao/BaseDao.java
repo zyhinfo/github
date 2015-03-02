@@ -168,4 +168,25 @@ public class BaseDao extends IBatisBaseDao{
 		}
 		
 	}
+	/**
+	 * 查询并缓存
+	 * @param request
+	 * @param joinTable
+	 * @return
+	 */
+	public List<Map<String,String>> queryTableCache(String statementName,HttpServletRequest request){
+		List<Map<String,String>> str= null;
+		ServletContext context = null;
+		if(request != null){
+			//从系统内存中获取
+			context = request.getSession().getServletContext();
+			str = (List<Map<String,String>>)context.getAttribute(statementName);
+			if(Util.getSize(str) > 0){
+				return str;
+			}
+		}
+		str = (List<Map<String,String>>)this.queryForList(statementName);
+		context.setAttribute(statementName, str);
+		return str;
+	}
 }

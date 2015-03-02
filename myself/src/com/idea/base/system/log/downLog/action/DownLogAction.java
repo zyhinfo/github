@@ -15,7 +15,6 @@ import com.idea.base.core.dao.action.BaseAction;
 import com.idea.base.system.log.downLog.domain.DownLogBean;
 import com.idea.base.system.log.downLog.services.DownLogService;
 import com.idea.base.system.param.util.ParamConstant;
-import com.idea.tools.factory.ToolsFactory;
 
 /**
  * 下载日志
@@ -63,23 +62,5 @@ public class DownLogAction extends BaseAction{
 		return null;
 	}
 	
-	/**
-	 * 获取文件
-	 * @param map
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(params = "method=getDownFile")
-	public String getDownFile(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
-		String downId = request.getParameter("downId");
-		String filePath = request.getParameter("filePath");
-		String downAgain = request.getParameter("downAgain");
-		//修改下载状态
-		if(!"yes".equals(downAgain)){
-			service.updateDownLogStatus(downId);
-		}
-		ToolsFactory.newDownFile(filePath).downloadToHome(request,response);
-		return null;
-	}
 	
 }

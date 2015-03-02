@@ -2,8 +2,6 @@ package com.idea.base.logon.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.idea.base.core.dao.action.BaseAction;
 import com.idea.base.core.encrypt.Encrypt;
@@ -74,7 +71,7 @@ public class LogonAction extends BaseAction{
 	@RequestMapping(params = "method=main")
 	public String main(ModelMap map, HttpServletRequest request) {
 		UserInfo user = this.getUser(request);
-		map.put("userDesc", user.getUserDesc());
+		map.put("userDesc", user.getUserName());
 		return "base/logon/main";
 	}
 	
@@ -120,28 +117,5 @@ public class LogonAction extends BaseAction{
 		setUser(request, null);
 		return logon(map, null, request);
 	}
-	/**
-	 * 查询下载列表
-	 * @param map
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(params = "method=queryDownFileList")
-	public ModelAndView queryDownFileList(ModelMap map, HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView("jsonView");
-		UserInfo user = this.getUser(request);
-		try {
-			String ids = request.getParameter("ids");
-			//查询下载列表
-			List list = service.queryDownFileList(ids,user.getUserId());
-			Map<String,Object> param = service.getDownFileTable(list);
-			//拼接下载列表tr
-			modelAndView.addObject("downTr",param.get("downTr"));
-			modelAndView.addObject("downProgress",param.get("downProgress"));
-			modelAndView.addObject("info", "ok");
-		} catch (Exception e) {
-			modelAndView.addObject("info", "err");
-		}
-		return modelAndView;
-	}
+	
 }

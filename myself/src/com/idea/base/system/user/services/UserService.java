@@ -75,4 +75,9 @@ public class UserService extends BaseDao {
 		}
 		
 	}
+	public String getUserGroupJSON(){
+		List list = this.queryForList("User.getUserGroupJSON");
+		return ConvertData.listToString(list);
+	}
+	
 }

@@ -1,7 +1,5 @@
 package com.idea.base.logon.domain;
 
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -14,7 +12,8 @@ public class UserInfo{
 	private String userName;   //中文名称
 	private String userDesc;
 	private String logonName;   //登录名称
-	private List<Map<String,String>> orgAndUserGroup=null;
+	private String userGroupId;
+	private String orgId;
 	public String getUserId() {
 		return userId;
 	}
@@ -40,10 +39,17 @@ public class UserInfo{
 	public void setLogonName(String logonName) {
 		this.logonName = logonName;
 	}
-	public List<Map<String, String>> getOrgAndUserGroup() {
-		return orgAndUserGroup;
+	public String getUserGroupId() {
+		return userGroupId;
 	}
-	public void setOrgAndUserGroup(List<Map<String, String>> orgAndUserGroup) {
-		this.orgAndUserGroup = orgAndUserGroup;
+	public void setUserGroupId(String userGroupId) {
+		this.userGroupId = userGroupId;
 	}
+	public String getOrgId() {
+		return orgId;
+	}
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+	
 }

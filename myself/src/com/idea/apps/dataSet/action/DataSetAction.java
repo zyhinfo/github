@@ -16,7 +16,6 @@ import com.idea.apps.dataSet.domain.DataSetBean;
 import com.idea.apps.dataSet.services.DataSetService;
 import com.idea.base.core.dao.action.BaseAction;
 import com.idea.base.system.param.util.ParamConstant;
-import com.idea.tools.util.UtilMethod;
 
 /**
  * 数据管理
@@ -39,7 +38,6 @@ public class DataSetAction extends BaseAction{
 	 */
 	@RequestMapping(params = "method=gotoDataSetList")
 	public String gotoParamList(ModelMap map, HttpServletRequest request) {
-		System.out.println(UtilMethod.getRemoteHost(request));
 		//获取分页的参数编号
 		String pageParamId = param.getSYSTEM_PAGING_PARAMID();
 		map.put("pageSize", service.queryParamById(request,pageParamId).get("pageSize"));

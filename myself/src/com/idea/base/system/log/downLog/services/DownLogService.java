@@ -17,7 +17,4 @@ public class DownLogService extends BaseDao{
 		page = this.browse("DownLog.getDownLogJSON", "DownLog.getDownLogJSONCount", page, bean);
 		return page.getJSONData();
 	}
-	public void updateDownLogStatus(String downId){
-		this.update("DownLog.updateDownLogStatus",downId);
-	}
 }

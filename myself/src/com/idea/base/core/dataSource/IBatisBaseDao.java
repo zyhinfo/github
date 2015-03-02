@@ -71,6 +71,10 @@ public class IBatisBaseDao{
 	public List queryForList(String statementName,Object parameterObject){
 		return this.getSqlMapClientTemplate().queryForList(statementName,parameterObject);
 	}
+	public List queryForList(String statementName,Object parameterObject,int startRow,int pageSize){
+		return this.getSqlMapClientTemplate().queryForList(
+				statementName, parameterObject, startRow,pageSize);
+	}
 	public String queryForJSON(String statementName,Object parameterObject){
 		List list = this.getSqlMapClientTemplate().queryForList(statementName,parameterObject);
 		return ConvertData.listToJSONString(list,-1);

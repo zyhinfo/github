@@ -92,7 +92,7 @@ public class DownDataImpl implements DownData {
 			this.fileType = ".txt";
 		}
 		if (!filePath.endsWith("/") && !filePath.endsWith("\\")) {
-			fileName += "/";
+			filePath += "/";
 		}
 		this.fileName = fileName;
 		this.filePath = filePath;

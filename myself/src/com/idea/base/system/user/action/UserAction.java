@@ -117,5 +117,25 @@ public class UserAction extends BaseAction{
 		}
 		return modelAndView;
 	}
-	
+	/**
+	 * 新增用户、机构、用户组关系 用户组查询
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=getUserGroupJSON")
+	public String getUserGroupJSON(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
+		response.setContentType("text/html;charset=utf-8");
+		response.setHeader("Cache-Control", "no-cache");
+		try {
+			String json = service.getUserGroupJSON();
+			PrintWriter out = response.getWriter();
+			out.write(json);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -48,6 +48,7 @@ function comboBox(id,url,type){
 	        tree: {
 	        	checkbox : false,
 	        	slide: true,
+	        	nodeWidth: 120,
 	        	url: url,
 	        	ajaxType:'post',
 	        	idFieldName : 'ID',
