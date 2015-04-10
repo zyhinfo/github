@@ -388,6 +388,7 @@ function archiveHolidayEditOK(item, dialog){
 	});
 }
 function leftLoad(titId){
+	$(parent.document.getElementById("pageloading")).show();
 	location.href=projectName+"/PersonalFileAction.action?method=showPersonalFile&titId="+titId+"&archiveId="
 		+$("#archiveId").val();
 }
