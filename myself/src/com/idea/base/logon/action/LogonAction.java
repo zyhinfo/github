@@ -38,6 +38,7 @@ public class LogonAction extends BaseAction{
 	 */
 	@RequestMapping(params = "method=logon")
 	public String logon(ModelMap map,LogonBean bean, HttpServletRequest request) {
+		if(getUser(request) != null) return main(map, request);
 		if(bean != null && Util.isNotEmpty(bean.getPassword())){
 			//对用户密码进行加密
 			bean.setPassword(Encrypt.encrypt(bean.getPassword()));
